@@ -1,6 +1,8 @@
 package com.artpro.artpro.member.controller;
 
+import com.artpro.artpro.member.dto.LoginRequest;
 import com.artpro.artpro.member.dto.RegisterRequest;
+import com.artpro.artpro.member.dto.TokenResponse;
 import com.artpro.artpro.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @PostMapping("/login")
+    @ResponseBody
+    public TokenResponse login(@RequestBody LoginRequest loginRequest) {
+        return memberService.login(loginRequest);
+    }
 
     @PostMapping("/register")
     @ResponseBody
