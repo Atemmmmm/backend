@@ -35,4 +35,10 @@ public class MemberController {
     public MessageResponse checkEmail(@RequestBody EmailRequest email) {
         return memberService.checkEmail(email);
     }
+
+    @PostMapping("/nickname")
+    @ResponseBody
+    public MessageResponse checkNickname(@RequestBody NicknameRequest nickname) {
+        return memberService.checkNickname(nickname);
+    }
 }
