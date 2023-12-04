@@ -1,5 +1,6 @@
 package com.artpro.artpro.member.entity;
 
+import io.jsonwebtoken.Claims;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,5 +29,9 @@ public class Member {
         this.nickname = nickname;
         this.password = password;
         this.role = role;
+    }
+
+    public Member(Claims claims) {
+        this.email = claims.get("email").toString();
     }
 }
