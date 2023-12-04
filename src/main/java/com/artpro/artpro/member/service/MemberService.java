@@ -1,9 +1,9 @@
 package com.artpro.artpro.member.service;
 
-import com.artpro.artpro.member.dto.LoginRequest;
-import com.artpro.artpro.member.dto.RegisterRequest;
-import com.artpro.artpro.member.dto.TokenResponse;
+import com.artpro.artpro.member.constant.ResponseMessage;
+import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.entity.Member;
+import com.artpro.artpro.member.exception.ExistingMemberException;
 import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.mapper.MemberMapper;
 import com.artpro.artpro.member.repository.MemberRepository;
@@ -41,5 +41,13 @@ public class MemberService {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         Member member = memberRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
         return jwtTokenProvider.generateToken(authentication, member.getId());
+    }
+
+    public MessageResponse checkEmail(EmailRequest emailRequest) {
+        memberRepository.findByEmail(emailRequest.getEmail())
+                .ifPresent(e -> {
+                    throw new ExistingMemberException();
+                });
+        return new MessageResponse(ResponseMessage.AVAILABLE_EMAIL.getMessage());
     }
 }

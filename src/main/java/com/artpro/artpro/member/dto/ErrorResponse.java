@@ -10,12 +10,14 @@ import java.util.List;
 public class ErrorResponse {
 
     private final String message;
+    private final String code;
     private final int status;
     private final List<FieldErrorResponse> errors;
 
     @Builder
-    public ErrorResponse(String message, int status, List<FieldErrorResponse> errors) {
+    public ErrorResponse(String message, String code, int status, List<FieldErrorResponse> errors) {
         this.message = message;
+        this.code = code;
         this.status = status;
         this.errors = initErrors(errors);
     }

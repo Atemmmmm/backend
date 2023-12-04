@@ -1,8 +1,6 @@
 package com.artpro.artpro.member.controller;
 
-import com.artpro.artpro.member.dto.LoginRequest;
-import com.artpro.artpro.member.dto.RegisterRequest;
-import com.artpro.artpro.member.dto.TokenResponse;
+import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,5 +28,11 @@ public class MemberController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();
+    }
+
+    @PostMapping("/email")
+    @ResponseBody
+    public MessageResponse checkEmail(@RequestBody EmailRequest email) {
+        return memberService.checkEmail(email);
     }
 }
