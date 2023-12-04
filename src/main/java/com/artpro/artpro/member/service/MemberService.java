@@ -29,10 +29,11 @@ public class MemberService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void create(RegisterRequest dto) {
+    public MessageResponse create(RegisterRequest dto) {
         String password = passwordEncoder.encode(dto.getPassword());
         Member member = memberMapper.mapToEntity(dto, password);
         memberRepository.save(member);
+        return new MessageResponse(ResponseMessage.CREATE_SUCCESS.getMessage());
     }
 
     @Transactional

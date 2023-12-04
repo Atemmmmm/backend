@@ -4,7 +4,6 @@ import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +22,9 @@ public class MemberController {
 
     @PostMapping("/register")
     @ResponseBody
-    public ResponseEntity<Void> register(@Validated @RequestBody RegisterRequest registerRequest) {
-        memberService.create(registerRequest);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .build();
+    @ResponseStatus(HttpStatus.CREATED)
+    public MessageResponse register(@Validated @RequestBody RegisterRequest registerRequest) {
+        return memberService.create(registerRequest);
     }
 
     @PostMapping("/email")
