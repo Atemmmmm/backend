@@ -1,9 +1,7 @@
-package com.artpro.artpro.member.controller;
+package com.artpro.artpro.global;
 
-import com.artpro.artpro.exception.ErrorCode;
 import com.artpro.artpro.member.dto.ErrorResponse;
 import com.artpro.artpro.member.dto.FieldErrorResponse;
-import com.artpro.artpro.member.exception.ExistingMemberException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -26,13 +24,14 @@ public class ExceptionController {
         return buildFieldErrors(ErrorCode.INVALID_INPUT_VALUE, fieldErrorResponses);
     }
 
-    @ExceptionHandler(ExistingMemberException.class)
+    @ExceptionHandler(DataExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    protected ErrorResponse handleRuntimeException(ExistingMemberException e){
+    protected ErrorResponse handleRuntimeException(DataExistException e){
+        ErrorCode errorCode = e.getErrorCode();
         return ErrorResponse.builder()
-                .status(e.getErrorCode().getStatus())
-                .code(e.getErrorCode().getCode())
-                .message(e.getMessage())
+                .status(errorCode.getStatus())
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
                 .build();
     }
 

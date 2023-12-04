@@ -1,4 +1,4 @@
-package com.artpro.artpro.exception;
+package com.artpro.artpro.global;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
