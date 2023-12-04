@@ -26,7 +26,18 @@ public class ExceptionController {
 
     @ExceptionHandler(DataExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    protected ExceptionResponse handleRuntimeException(DataExistException e){
+    protected ExceptionResponse handleConflictException(DataExistException e){
+        ErrorCode errorCode = e.getErrorCode();
+        return ExceptionResponse.builder()
+                .status(errorCode.getStatus())
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(DataDoesNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    protected ExceptionResponse handleNotFoundException(DataDoesNotExistException e){
         ErrorCode errorCode = e.getErrorCode();
         return ExceptionResponse.builder()
                 .status(errorCode.getStatus())

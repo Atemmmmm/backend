@@ -5,6 +5,7 @@ import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.member.exception.ExistingMemberException;
 import com.artpro.artpro.member.exception.ExistingNicknameException;
+import com.artpro.artpro.member.exception.MemberNotFoundException;
 import com.artpro.artpro.member.exception.MismatchPasswordException;
 import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.mapper.MemberMapper;
@@ -36,9 +37,10 @@ public class MemberService {
 
     @Transactional
     public TokenResponse login(LoginRequest loginRequest) {
+        Member member = memberRepository.findByEmail(loginRequest.getEmail())
+                .orElseThrow(MemberNotFoundException::new);
         UsernamePasswordAuthenticationToken authenticationToken = loginRequest.toAuthentication();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        Member member = memberRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
         return jwtTokenProvider.generateToken(authentication, member.getId());
     }
 
