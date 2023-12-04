@@ -41,4 +41,10 @@ public class MemberController {
     public MessageResponse checkNickname(@RequestBody NicknameRequest nickname) {
         return memberService.checkNickname(nickname);
     }
+
+    @PostMapping("/password")
+    @ResponseBody
+    public MessageResponse checkPassword(@RequestBody PasswordRequest nickname) {
+        return memberService.checkPassword(nickname);
+    }
 }

@@ -20,8 +20,5 @@ public class RegisterRequest {
     @NotBlank(message = "비밀번호는 필수 입력사항 입니다.")
     private final String password;
 
-    @NotBlank(message = "비밀번호를 확인하여야 합니다.")
-    private final String checkPassword;
-
     private final Role role;
 }

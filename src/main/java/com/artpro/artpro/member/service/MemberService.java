@@ -5,6 +5,7 @@ import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.member.exception.ExistingMemberException;
 import com.artpro.artpro.member.exception.ExistingNicknameException;
+import com.artpro.artpro.member.exception.MismatchPasswordException;
 import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.mapper.MemberMapper;
 import com.artpro.artpro.member.repository.MemberRepository;
@@ -28,9 +29,6 @@ public class MemberService {
 
     @Transactional
     public void create(RegisterRequest dto) {
-        if (!dto.getPassword().equals(dto.getCheckPassword())) {
-            throw new RuntimeException("비밀번호가 일치하지 않습니다.");
-        }
         String password = passwordEncoder.encode(dto.getPassword());
         Member member = memberMapper.mapToEntity(dto, password);
         memberRepository.save(member);
@@ -58,5 +56,12 @@ public class MemberService {
                     throw new ExistingNicknameException();
                 });
         return new MessageResponse(ResponseMessage.AVAILABLE_NICKNAME.getMessage());
+    }
+
+    public MessageResponse checkPassword(PasswordRequest dto) {
+        if (!dto.getPassword().equals(dto.getCheckPassword())) {
+            throw new MismatchPasswordException();
+        }
+        return new MessageResponse(ResponseMessage.MATCH_PASSWORD.getMessage());
     }
 }

@@ -1,10 +1,12 @@
 package com.artpro.artpro.global;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@Builder
 public class ExceptionResponse {
 
     private final String message;

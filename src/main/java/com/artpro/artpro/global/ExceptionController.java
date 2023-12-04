@@ -26,9 +26,9 @@ public class ExceptionController {
 
     @ExceptionHandler(DataExistException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    protected ErrorResponse handleRuntimeException(DataExistException e){
+    protected ExceptionResponse handleRuntimeException(DataExistException e){
         ErrorCode errorCode = e.getErrorCode();
-        return ErrorResponse.builder()
+        return ExceptionResponse.builder()
                 .status(errorCode.getStatus())
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
