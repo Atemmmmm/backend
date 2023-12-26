@@ -29,19 +29,19 @@ public class MemberController {
 
     @PostMapping("/email")
     @ResponseBody
-    public MessageResponse checkEmail(@RequestBody EmailRequest email) {
+    public boolean checkEmail(@RequestBody EmailRequest email) {
         return memberService.checkEmail(email);
     }
 
     @PostMapping("/nickname")
     @ResponseBody
-    public MessageResponse checkNickname(@RequestBody NicknameRequest nickname) {
+    public boolean checkNickname(@RequestBody NicknameRequest nickname) {
         return memberService.checkNickname(nickname);
     }
 
     @PostMapping("/password")
     @ResponseBody
-    public MessageResponse checkPassword(@RequestBody PasswordRequest nickname) {
+    public boolean checkPassword(@RequestBody PasswordRequest nickname) {
         return memberService.checkPassword(nickname);
     }
 }

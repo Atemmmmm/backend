@@ -3,10 +3,7 @@ package com.artpro.artpro.member.service;
 import com.artpro.artpro.member.constant.ResponseMessage;
 import com.artpro.artpro.member.dto.*;
 import com.artpro.artpro.member.entity.Member;
-import com.artpro.artpro.member.exception.ExistingMemberException;
-import com.artpro.artpro.member.exception.ExistingNicknameException;
 import com.artpro.artpro.member.exception.MemberNotFoundException;
-import com.artpro.artpro.member.exception.MismatchPasswordException;
 import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.mapper.MemberMapper;
 import com.artpro.artpro.member.repository.MemberRepository;
@@ -45,26 +42,15 @@ public class MemberService {
         return jwtTokenProvider.generateToken(authentication, member.getId());
     }
 
-    public MessageResponse checkEmail(EmailRequest emailRequest) {
-        memberRepository.findByEmail(emailRequest.getEmail())
-                .ifPresent(e -> {
-                    throw new ExistingMemberException();
-                });
-        return new MessageResponse(ResponseMessage.AVAILABLE_EMAIL.getMessage());
+    public boolean checkEmail(EmailRequest emailRequest) {
+        return memberRepository.existsByEmail(emailRequest.getEmail());
     }
 
-    public MessageResponse checkNickname(NicknameRequest nickname) {
-        memberRepository.findByNickname(nickname.getNickname())
-                .ifPresent(e -> {
-                    throw new ExistingNicknameException();
-                });
-        return new MessageResponse(ResponseMessage.AVAILABLE_NICKNAME.getMessage());
+    public boolean checkNickname(NicknameRequest nickname) {
+        return memberRepository.existsByNickname(nickname.getNickname());
     }
 
-    public MessageResponse checkPassword(PasswordRequest dto) {
-        if (!dto.getPassword().equals(dto.getCheckPassword())) {
-            throw new MismatchPasswordException();
-        }
-        return new MessageResponse(ResponseMessage.MATCH_PASSWORD.getMessage());
+    public boolean checkPassword(PasswordRequest dto) {
+        return dto.getPassword().equals(dto.getCheckPassword());
     }
 }
