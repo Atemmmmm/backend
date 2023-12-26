@@ -59,14 +59,14 @@ public class AuthService {
     }
 
     public boolean checkEmail(EmailRequest emailRequest) {
-        return authRepository.existsByEmail(emailRequest.getEmail());
+        return authRepository.existsByEmail(emailRequest.email());
     }
 
     public boolean checkNickname(NicknameRequest nickname) {
-        return authRepository.existsByNickname(nickname.getNickname());
+        return authRepository.existsByNickname(nickname.nickname());
     }
 
     public boolean checkPassword(PasswordRequest dto) {
-        return dto.getPassword().equals(dto.getCheckPassword());
+        return dto.password().equals(dto.checkPassword());
     }
 }

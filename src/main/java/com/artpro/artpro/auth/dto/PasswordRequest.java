@@ -1,12 +1,5 @@
 package com.artpro.artpro.auth.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+public record PasswordRequest(String password, String checkPassword) {
 
-@AllArgsConstructor
-@Getter
-public class PasswordRequest {
-
-    private final String password;
-    private final String checkPassword;
 }

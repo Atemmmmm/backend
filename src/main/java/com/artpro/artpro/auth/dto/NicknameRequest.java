@@ -1,11 +1,5 @@
 package com.artpro.artpro.auth.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+public record NicknameRequest(String nickname) {
 
-@Getter
-@RequiredArgsConstructor
-public class NicknameRequest {
-
-    private String nickname;
 }

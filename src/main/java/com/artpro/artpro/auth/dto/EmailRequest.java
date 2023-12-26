@@ -1,11 +1,5 @@
 package com.artpro.artpro.auth.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+public record EmailRequest(String email) {
 
-@Getter
-@RequiredArgsConstructor
-public class EmailRequest {
-
-    private String email;
 }
