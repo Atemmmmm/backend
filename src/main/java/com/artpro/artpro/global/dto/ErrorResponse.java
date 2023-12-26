@@ -1,4 +1,4 @@
-package com.artpro.artpro.member.dto;
+package com.artpro.artpro.global.dto;
 
 import lombok.Builder;
 import lombok.Getter;

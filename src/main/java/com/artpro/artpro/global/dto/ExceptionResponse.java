@@ -1,4 +1,4 @@
-package com.artpro.artpro.global;
+package com.artpro.artpro.global.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
