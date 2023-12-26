@@ -5,7 +5,7 @@ import com.artpro.artpro.auth.dto.NicknameRequest;
 import com.artpro.artpro.auth.dto.PasswordRequest;
 import com.artpro.artpro.auth.dto.RegisterRequest;
 import com.artpro.artpro.auth.service.AuthService;
-import com.artpro.artpro.member.dto.*;
+import com.artpro.artpro.member.dto.MessageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
