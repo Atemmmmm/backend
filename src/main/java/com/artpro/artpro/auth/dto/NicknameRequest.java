@@ -1,11 +1,11 @@
-package com.artpro.artpro.member.dto;
+package com.artpro.artpro.auth.dto;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class EmailRequest {
+public class NicknameRequest {
 
-    private String email;
+    private String nickname;
 }

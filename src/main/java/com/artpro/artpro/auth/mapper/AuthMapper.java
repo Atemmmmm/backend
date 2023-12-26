@@ -1,13 +1,11 @@
-package com.artpro.artpro.member.mapper;
+package com.artpro.artpro.auth.mapper;
 
-import com.artpro.artpro.member.dto.RegisterRequest;
+import com.artpro.artpro.auth.dto.RegisterRequest;
 import com.artpro.artpro.member.entity.Member;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class MemberMapper {
+public class AuthMapper {
 
     public Member mapToEntity(RegisterRequest dto, String password) {
         return Member.builder()

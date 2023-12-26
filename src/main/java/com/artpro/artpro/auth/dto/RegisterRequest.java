@@ -1,4 +1,4 @@
-package com.artpro.artpro.member.dto;
+package com.artpro.artpro.auth.dto;
 
 import com.artpro.artpro.member.entity.Role;
 import jakarta.validation.constraints.Email;
@@ -19,6 +19,9 @@ public class RegisterRequest {
 
     @NotBlank(message = "비밀번호는 필수 입력사항 입니다.")
     private final String password;
+
+    @NotBlank(message = "비밀번호는 필수 입력사항 입니다.")
+    private final String checkPassword;
 
     private final Role role;
 }

@@ -35,6 +35,7 @@ public class SecurityConfig {
                         request -> request
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/members").permitAll()
                                 .requestMatchers("/api/v1/admin").hasAnyAuthority(Role.ADMIN.name())
                                 .anyRequest()
                                 .authenticated()

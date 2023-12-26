@@ -1,7 +1,7 @@
 package com.artpro.artpro.member.exception;
 
-import com.artpro.artpro.global.DataDoesNotExistException;
 import com.artpro.artpro.global.ErrorCode;
+import com.artpro.artpro.global.exception.DataDoesNotExistException;
 
 public class MemberNotFoundException extends DataDoesNotExistException {
 

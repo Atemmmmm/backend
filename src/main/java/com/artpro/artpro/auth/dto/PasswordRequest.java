@@ -1,4 +1,4 @@
-package com.artpro.artpro.member.dto;
+package com.artpro.artpro.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
