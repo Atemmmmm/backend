@@ -34,7 +34,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.PRIVATE_KEY }}
+          key: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           source: "build/libs/artpro-0.0.1-SNAPSHOT.jar"
           target: "/app"
