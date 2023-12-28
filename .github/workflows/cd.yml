@@ -44,4 +44,3 @@ jobs:
         aws s3 cp \
         --region ${{ secrets.REGION }} \
         --acl private \
-./springboot-intro-build.zip s3://springboot=intro=build
