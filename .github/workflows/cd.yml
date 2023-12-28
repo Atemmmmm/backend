@@ -39,9 +39,9 @@ jobs:
     - name: Deliver To AWS S3
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY_ID: ${{ secrets.SECRET_KEY }}
-        AWS_REGION: ${{ secrets.REGION }}
+        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+        aws-region: ${{ secrets.REGION }}
     - name: Upload to S3
       run: aws s3 cp --region ${{ secrets.REGION }} ./springboot-intro-build.zip s3://${{ secrets.BUCKET_NAME }}/springboot-intro-build.zip
     - name: Deploy to AWS EC2 from S3
