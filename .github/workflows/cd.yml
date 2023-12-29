@@ -50,5 +50,5 @@ jobs:
             whoami
             cd {{ secrets.TARGET_PATH }}
             sudo kill -9 $(lsof -t -i:8080)
-            java -jar artpro-0.0.1-SNAPSHOT.jar
+            sudo java -jar artpro-0.0.1-SNAPSHOT.jar
     
