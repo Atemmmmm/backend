@@ -5,7 +5,6 @@ import com.artpro.artpro.auth.dto.NicknameRequest;
 import com.artpro.artpro.auth.dto.PasswordRequest;
 import com.artpro.artpro.auth.dto.RegisterRequest;
 import com.artpro.artpro.auth.exception.ExistingEmailException;
-import com.artpro.artpro.auth.exception.ExistingNicknameException;
 import com.artpro.artpro.auth.exception.MismatchPasswordException;
 import com.artpro.artpro.auth.mapper.AuthMapper;
 import com.artpro.artpro.auth.repository.AuthRepository;
@@ -36,19 +35,12 @@ public class AuthService {
 
     private void validateRequest(RegisterRequest dto) {
         validateEmail(dto);
-        validateNickname(dto);
         validatePassword(dto);
     }
 
     private void validateEmail(RegisterRequest dto) {
         if (authRepository.existsByEmail(dto.getEmail())) {
             throw new ExistingEmailException();
-        }
-    }
-
-    private void validateNickname(RegisterRequest dto) {
-        if (authRepository.existsByNickname(dto.getNickname())) {
-            throw new ExistingNicknameException();
         }
     }
 
