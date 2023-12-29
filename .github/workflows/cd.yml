@@ -9,9 +9,7 @@ name: Java CD with Gradle
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "develop" ]
 
 permissions:
   contents: read
