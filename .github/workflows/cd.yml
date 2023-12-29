@@ -48,7 +48,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             whoami
-            cd deploy/build/libs
+            cd {{ sercres.TARGET_PATH }}
             sudo kill -9 $(sudo lsof -t -i:8080)
             java -jar artpro-0.0.1-SNAPSHOT.jar
     
