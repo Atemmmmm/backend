@@ -37,7 +37,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           source: "build/libs/*.jar"
-          target: "/deploy"
+          target: "{{ sercres.TARGET_PATH }}"
           strip_components: 2
       - name: Start Service
         uses: appleboy/ssh-action@master
