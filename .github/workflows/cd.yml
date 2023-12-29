@@ -49,7 +49,6 @@ jobs:
           script: |
             whoami
             cd {{ sercres.TARGET_PATH }}
-            cd build/libs
             sudo kill -9 $(lsof -t -i:8080)
             java -jar artpro-0.0.1-SNAPSHOT.jar
     
