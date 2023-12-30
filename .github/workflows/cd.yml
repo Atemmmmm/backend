@@ -36,19 +36,13 @@ jobs:
           strip_components: 2
       - name: Start Service
         uses: appleboy/ssh-action@master
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            source ~/.bash_profile 
             cd ${{ secrets.JAR_FOLDER }}
             sudo kill -9 $(lsof -t -i:8080)
             nohup java -jar artpro-0.0.1-SNAPSHOT.jar &
