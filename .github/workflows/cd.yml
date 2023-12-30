@@ -10,14 +10,6 @@ name: Java CD with Gradle
 on:
   push:
     branches: [ "develop" ]
-
-env:
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_NAME: ${{ secrets.DB_NAME }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_PORT: ${{ secrets.DB_PORT }}
-  DB_USERNAME: ${{ secrets.DB_USERNAME }}
-  JWT_SECRET: ${{ secrets.JWT_SECRET }}
   
 jobs:
   build:
@@ -44,6 +36,13 @@ jobs:
           strip_components: 2
       - name: Start Service
         uses: appleboy/ssh-action@master
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
