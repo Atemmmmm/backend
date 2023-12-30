@@ -31,7 +31,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - run: chmod +x gradlew
-      - run: ./gradlew clean build bootJar -DB_HOST={{ secrets.DB_HOST }} -DMYSQL_USER=mock -DMYSQL_PASSWORD=mock
+      - run: ./gradlew clean build bootJar
       - name: SCP JAR
         uses: appleboy/scp-action@master
         with:
