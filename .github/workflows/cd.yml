@@ -49,5 +49,5 @@ jobs:
             export DB_PORT=${{ secrets.DB_PORT }}
             export DB_USERNAME=${{ secrets.DB_USERNAME }}
             export JWT_SECRET=${{ secrets.JWT_SECRET }}
-            sudo kill -9 $(lsof -t -i:8080)
-            nohup java -jar artpro-0.0.1-SNAPSHOT.jar &
+            kill -9 $(lsof -t -i:8080)
+            nohup java -jar artpro-0.0.1-SNAPSHOT.jar > nohup.out 2> nohup.err < /dev/null &
