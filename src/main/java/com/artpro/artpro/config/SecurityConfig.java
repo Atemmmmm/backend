@@ -2,13 +2,10 @@ package com.artpro.artpro.config;
 
 import com.artpro.artpro.member.entity.Role;
 import com.artpro.artpro.member.jwt.JwtAuthenticationFilter;
-import com.artpro.artpro.member.service.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter filter;
-    private final UserDetailService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -41,18 +37,10 @@ public class SecurityConfig {
                                 .authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider()).addFilterBefore(
+                .addFilterBefore(
                         filter, UsernamePasswordAuthenticationFilter.class
                 );
         return httpSecurity.build();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService.userDetailsService());
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
     }
 
     @Bean
