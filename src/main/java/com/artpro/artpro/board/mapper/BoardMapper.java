@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardMapper {
 
-    public Board mapToEntity(CreateBoardRequest dto, MemberDto memberDto) {
+    public Board mapToEntity(CreateBoardRequest dto, MemberDto memberDto, String songUrl, String imageUrl) {
         return Board.builder()
-                .cover(dto.cover())
-                .song(dto.song())
+                .cover(imageUrl)
+                .song(songUrl)
                 .title(dto.title())
                 .member(memberDto.member())
                 .build();
