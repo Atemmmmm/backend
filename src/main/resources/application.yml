@@ -13,5 +13,16 @@ spring:
       ddl-auto: create-drop
     database-platform: org.hibernate.dialect.MySQLDialect
 
+  cloud:
+    aws:
+      credentials:
+        access-key: ${BUCKET_ACCESS_KEY}
+        secret-key: ${BUCKET_SECRET_KEY}
+      s3:
+        bucket: ${BUCKET_NAME}
+      region:
+        static: ${BUCKET_REGION}
+
+
 jwt:
   secret: ${JWT_SECRET}
