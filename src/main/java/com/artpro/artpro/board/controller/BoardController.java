@@ -1,6 +1,7 @@
 package com.artpro.artpro.board.controller;
 
 import com.artpro.artpro.board.dto.request.CreateBoardRequest;
+import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.service.BoardService;
 import com.artpro.artpro.global.dto.MemberDto;
@@ -29,5 +30,10 @@ public class BoardController {
     @GetMapping
     public List<BoardResponse> getAllBoards() {
         return boardService.getAllBoard();
+    }
+
+    @GetMapping("/{boardId}")
+    public BoardDetailResponse findByBoardId(@PathVariable long boardId) {
+        return boardService.findByBoardId(boardId);
     }
 }

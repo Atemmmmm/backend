@@ -1,8 +1,10 @@
 package com.artpro.artpro.board.service;
 
 import com.artpro.artpro.board.dto.request.CreateBoardRequest;
+import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.entity.Board;
+import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.mapper.BoardMapper;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
@@ -36,5 +38,11 @@ public class BoardService {
         return boards.stream()
                 .map(BoardResponse::new)
                 .toList();
+    }
+
+    public BoardDetailResponse findByBoardId(long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        return new BoardDetailResponse(board);
     }
 }
