@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+
 @Service
 @RequiredArgsConstructor
 public class HeartService {
@@ -33,5 +35,14 @@ public class HeartService {
         Heart heart = heartRepository.findById(heartId)
                 .orElseThrow(HeartNotFoundException::new);
         heart.delete();
+    }
+
+    public boolean isHeart(Long boardId, MemberDto memberDto) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        return heartRepository.findHeartByBoardAndMember(board, memberDto.member())
+                .orElse(new ArrayList<>())
+                .stream()
+                .anyMatch(Heart::isValid);
     }
 }

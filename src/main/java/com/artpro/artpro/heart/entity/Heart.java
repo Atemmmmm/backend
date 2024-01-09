@@ -46,4 +46,8 @@ public class Heart {
     public void delete() {
         this.isValid = false;
     }
+
+    public boolean isValid() {
+        return isValid;
+    }
 }

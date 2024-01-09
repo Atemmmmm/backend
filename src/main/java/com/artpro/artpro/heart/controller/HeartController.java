@@ -22,4 +22,9 @@ public class HeartController {
     public void delete(@PathVariable long boardId, @PathVariable long heartId) {
         heartService.delete(heartId);
     }
+
+    @GetMapping
+    public boolean isHeart(@PathVariable long boardId, @AuthenticationPrincipal MemberDto memberDto) {
+        return heartService.isHeart(boardId, memberDto);
+    }
 }
