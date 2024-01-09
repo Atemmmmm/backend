@@ -42,4 +42,12 @@ public class BoardController {
     public void deleteById(@PathVariable long boardId) {
         boardService.deleteById(boardId);
     }
+
+    @PutMapping("/{boardId}")
+    public void updateById(@PathVariable long boardId,
+                           CreateBoardRequest request,
+                           @RequestPart MultipartFile song,
+                           @RequestPart MultipartFile coverImage) {
+        boardService.updateById(boardId, request, song, coverImage);
+    }
 }

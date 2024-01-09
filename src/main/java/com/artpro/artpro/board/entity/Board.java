@@ -20,6 +20,7 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String genre;
     private String cover;
     private String song;
     private String category;
@@ -37,9 +38,10 @@ public class Board {
     private BoardStatus status;
 
     @Builder
-    public Board(Long id, String title, String cover, String song, Member member, LocalDateTime createAt, LocalDateTime upDateAt, LocalDateTime deleteAt, BoardStatus status) {
+    public Board(Long id, String title, String genre, String cover, String song, Member member, LocalDateTime createAt, LocalDateTime upDateAt, LocalDateTime deleteAt, BoardStatus status) {
         this.id = id;
         this.title = title;
+        this.genre = genre;
         this.cover = cover;
         this.song = song;
         this.member = member;
@@ -48,5 +50,12 @@ public class Board {
         this.deleteAt = deleteAt;
         this.status = status;
         this.category = member.getRole().toString();
+    }
+
+    public void update(String title, String genre, String cover, String song) {
+        this.title = title;
+        this.cover = cover;
+        this.song = song;
+        this.genre = genre;
     }
 }

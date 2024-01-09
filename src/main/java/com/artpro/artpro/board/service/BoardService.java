@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -44,7 +45,20 @@ public class BoardService {
         return new BoardDetailResponse(board);
     }
 
+    @Transactional
     public void deleteById(long boardId) {
         boardRepository.deleteById(boardId);
+    }
+
+    @Transactional
+    public void updateById(long boardId,
+                           CreateBoardRequest request,
+                           MultipartFile song,
+                           MultipartFile coverImage) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        String songUrl = fileRepository.save(song);
+        String coverImageUrl = fileRepository.save(coverImage);
+        board.update(request.title(), request.genre(), songUrl, coverImageUrl);
     }
 }
