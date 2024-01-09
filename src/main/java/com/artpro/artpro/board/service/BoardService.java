@@ -45,4 +45,8 @@ public class BoardService {
                 .orElseThrow(BoardNotFoundException::new);
         return new BoardDetailResponse(board);
     }
+
+    public void deleteById(long boardId) {
+        boardRepository.deleteById(boardId);
+    }
 }

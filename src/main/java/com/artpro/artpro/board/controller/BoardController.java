@@ -36,4 +36,9 @@ public class BoardController {
     public BoardDetailResponse findByBoardId(@PathVariable long boardId) {
         return boardService.findByBoardId(boardId);
     }
+
+    @DeleteMapping("/{boardId}")
+    public void deleteById(@PathVariable long boardId) {
+        boardService.deleteById(boardId);
+    }
 }
