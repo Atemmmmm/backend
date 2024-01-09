@@ -6,11 +6,12 @@ import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.service.BoardService;
 import com.artpro.artpro.global.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,8 +29,8 @@ public class BoardController {
     }
 
     @GetMapping
-    public List<BoardResponse> getAllBoards() {
-        return boardService.getAllBoard();
+    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable) {
+        return boardService.getAllBoard(pageable);
     }
 
     @GetMapping("/{boardId}")

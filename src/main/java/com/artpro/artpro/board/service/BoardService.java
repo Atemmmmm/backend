@@ -10,10 +10,10 @@ import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
 import com.artpro.artpro.global.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,11 +33,9 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public List<BoardResponse> getAllBoard() {
-        List<Board> boards = boardRepository.findAll();
-        return boards.stream()
-                .map(BoardResponse::new)
-                .toList();
+    public Page<BoardResponse> getAllBoard(Pageable pageable) {
+        return boardRepository.findAll(pageable)
+                .map(BoardResponse::new);
     }
 
     public BoardDetailResponse findByBoardId(long boardId) {
