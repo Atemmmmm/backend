@@ -42,4 +42,8 @@ public class Heart {
         this.board = board;
         this.member = member;
     }
+
+    public void delete() {
+        this.isValid = false;
+    }
 }

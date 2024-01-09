@@ -4,10 +4,7 @@ import com.artpro.artpro.global.dto.MemberDto;
 import com.artpro.artpro.heart.service.HeartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +16,10 @@ public class HeartController {
     @PostMapping
     public void create(@PathVariable long boardId, @AuthenticationPrincipal MemberDto memberDto) {
         heartService.create(boardId, memberDto);
+    }
+
+    @DeleteMapping("/{heartId}")
+    public void delete(@PathVariable long boardId, @PathVariable long heartId) {
+        heartService.delete(heartId);
     }
 }
