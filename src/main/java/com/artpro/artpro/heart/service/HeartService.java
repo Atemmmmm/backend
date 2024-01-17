@@ -28,13 +28,16 @@ public class HeartService {
         HeartMapper mapper = new HeartMapper();
         Heart heart = mapper.mapToEntity(memberDto.member() , board);
         heartRepository.save(heart);
+        board.updateLikeCount(board.getLikeCount() + 1);
     }
 
     @Transactional
     public void delete(Long heartId) {
         Heart heart = heartRepository.findById(heartId)
                 .orElseThrow(HeartNotFoundException::new);
+        Board board = heart.getBoard();
         heart.delete();
+        board.updateLikeCount(board.getLikeCount() - 1);
     }
 
     public boolean isHeart(Long boardId, MemberDto memberDto) {
@@ -44,11 +47,5 @@ public class HeartService {
                 .orElse(new ArrayList<>())
                 .stream()
                 .anyMatch(Heart::isValid);
-    }
-
-    public int countHeart(Long boardId) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(BoardNotFoundException::new);
-        return heartRepository.countByBoard(board);
     }
 }

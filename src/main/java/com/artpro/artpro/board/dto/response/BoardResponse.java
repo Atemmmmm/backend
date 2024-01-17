@@ -12,9 +12,11 @@ public class BoardResponse {
 
     private final String title;
     private final String coverUrl;
+    private final int likeCount;
 
     public BoardResponse(Board board) {
         this.title = board.getTitle();
         this.coverUrl = board.getCover();
+        this.likeCount = board.getLikeCount();
     }
 }

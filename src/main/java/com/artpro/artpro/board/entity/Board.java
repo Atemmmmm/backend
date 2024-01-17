@@ -25,6 +25,8 @@ public class Board {
     private String song;
     private String category;
 
+    private int likeCount;
+
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
@@ -44,12 +46,13 @@ public class Board {
         this.genre = genre;
         this.cover = cover;
         this.song = song;
+        this.category = member.getRole().toString().toLowerCase();
+        this.likeCount = 0;
         this.member = member;
         this.createAt = createAt;
         this.upDateAt = upDateAt;
         this.deleteAt = deleteAt;
         this.status = status;
-        this.category = member.getRole().toString().toLowerCase();
     }
 
     public void update(String title, String genre, String cover, String song) {
@@ -57,5 +60,9 @@ public class Board {
         this.cover = cover;
         this.song = song;
         this.genre = genre;
+    }
+
+    public void updateLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
 }
