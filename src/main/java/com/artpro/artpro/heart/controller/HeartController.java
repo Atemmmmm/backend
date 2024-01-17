@@ -23,6 +23,11 @@ public class HeartController {
         heartService.delete(heartId);
     }
 
+    @GetMapping("/count")
+    public int countHeart(@PathVariable long boardId) {
+        return heartService.countHeart(boardId);
+    }
+
     @GetMapping
     public boolean isHeart(@PathVariable long boardId, @AuthenticationPrincipal MemberDto memberDto) {
         return heartService.isHeart(boardId, memberDto);

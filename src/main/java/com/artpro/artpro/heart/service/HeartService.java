@@ -45,4 +45,10 @@ public class HeartService {
                 .stream()
                 .anyMatch(Heart::isValid);
     }
+
+    public int countHeart(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        return heartRepository.countByBoard(board);
+    }
 }
