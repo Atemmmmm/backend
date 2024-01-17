@@ -49,7 +49,7 @@ public class Board {
         this.upDateAt = upDateAt;
         this.deleteAt = deleteAt;
         this.status = status;
-        this.category = member.getRole().toString();
+        this.category = member.getRole().toString().toLowerCase();
     }
 
     public void update(String title, String genre, String cover, String song) {

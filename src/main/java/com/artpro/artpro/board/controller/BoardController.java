@@ -28,12 +28,13 @@ public class BoardController {
         boardService.create(request, memberDto, song, coverImage);
     }
 
-    @GetMapping
-    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable) {
-        return boardService.getAllBoard(pageable);
+    @GetMapping("/{category}")
+    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable,
+                                            @PathVariable String category) {
+        return boardService.getAllBoardByCategory(pageable, category);
     }
 
-    @GetMapping("/{boardId}")
+    @GetMapping("/{category}/{boardId}")
     public BoardDetailResponse findByBoardId(@PathVariable long boardId) {
         return boardService.findByBoardId(boardId);
     }

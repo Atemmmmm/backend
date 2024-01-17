@@ -24,6 +24,7 @@ public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardMapper boardMapper;
 
+    @Transactional
     public void create(CreateBoardRequest request,
                        MemberDto memberDto,
                        MultipartFile song,
@@ -34,8 +35,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Page<BoardResponse> getAllBoard(Pageable pageable) {
-        return boardRepository.findAll(pageable)
+    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, String category) {
+        return boardRepository.findAllByCategory(pageable, category)
                 .map(BoardResponse::new);
     }
 
