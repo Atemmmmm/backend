@@ -30,8 +30,9 @@ public class BoardController {
 
     @GetMapping("/{category}")
     public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable,
-                                            @PathVariable String category) {
-        return boardService.getAllBoardByCategory(pageable, category);
+                                            @PathVariable String category,
+                                            @RequestParam(defaultValue = "id", value = "orderby") String orderCriteria) {
+        return boardService.getAllBoardByCategory(pageable, category, orderCriteria);
     }
 
     @GetMapping("/{category}/{boardId}")

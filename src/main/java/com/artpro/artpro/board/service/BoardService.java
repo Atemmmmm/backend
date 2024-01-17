@@ -11,7 +11,9 @@ import com.artpro.artpro.file.repository.FileRepository;
 import com.artpro.artpro.global.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +37,8 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, String category) {
+    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, String category, String orderCriteria) {
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(orderCriteria));
         return boardRepository.findAllByCategory(pageable, category)
                 .map(BoardResponse::new);
     }
