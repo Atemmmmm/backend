@@ -2,6 +2,7 @@ package com.artpro.artpro.config;
 
 import com.artpro.artpro.member.entity.Role;
 import com.artpro.artpro.member.jwt.JwtAuthenticationFilter;
+import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,13 +22,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter filter;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(
                         AbstractHttpConfigurer::disable
-                ).authorizeHttpRequests(
+                )
+                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
@@ -36,9 +39,8 @@ public class SecurityConfig {
                                 .anyRequest()
                                 .authenticated()
                 )
-                .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(
-                        filter, UsernamePasswordAuthenticationFilter.class
+                        new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class
                 );
         return httpSecurity.build();
     }

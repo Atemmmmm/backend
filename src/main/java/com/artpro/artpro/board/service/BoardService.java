@@ -8,7 +8,7 @@ import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.mapper.BoardMapper;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
-import com.artpro.artpro.global.dto.MemberDto;
+import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,12 +28,12 @@ public class BoardService {
 
     @Transactional
     public void create(CreateBoardRequest request,
-                       MemberDto memberDto,
+                       Member member,
                        MultipartFile song,
                        MultipartFile coverImage) {
         String songUrl = fileRepository.save(song);
         String coverImageUrl = fileRepository.save(coverImage);
-        Board board = boardMapper.mapToEntity(request, memberDto, songUrl, coverImageUrl);
+        Board board = boardMapper.mapToEntity(request, member, songUrl, coverImageUrl);
         boardRepository.save(board);
     }
 

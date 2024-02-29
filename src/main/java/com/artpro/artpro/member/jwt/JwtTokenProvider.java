@@ -1,6 +1,7 @@
 package com.artpro.artpro.member.jwt;
 
 import com.artpro.artpro.member.dto.TokenResponse;
+import com.artpro.artpro.member.entity.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
@@ -67,14 +67,12 @@ public class JwtTokenProvider {
         if (claims.get("auth") == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
-        UserDetails user = userDetailsService.loadUserByUsername(claims.getSubject());
         Collection<? extends GrantedAuthority> authorities =
                 Arrays.stream(claims.get("auth").toString().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .toList();
-        return new UsernamePasswordAuthenticationToken(user, accessToken, authorities);
+        return new UsernamePasswordAuthenticationToken(new Member(claims), null, authorities);
     }
-
 
     public boolean validateToken(String token) {
         try {

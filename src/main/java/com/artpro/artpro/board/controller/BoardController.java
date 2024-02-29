@@ -4,7 +4,7 @@ import com.artpro.artpro.board.dto.request.CreateBoardRequest;
 import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.service.BoardService;
-import com.artpro.artpro.global.dto.MemberDto;
+import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +21,11 @@ public class BoardController {
     private final BoardService boardService;
 
     @PostMapping
-    public void create(@AuthenticationPrincipal MemberDto memberDto,
+    public void create(@AuthenticationPrincipal Member member,
                        CreateBoardRequest request,
                        @RequestPart MultipartFile song,
                        @RequestPart MultipartFile coverImage) {
-        boardService.create(request, memberDto, song, coverImage);
+        boardService.create(request, member, song, coverImage);
     }
 
     @GetMapping("/{category}")
