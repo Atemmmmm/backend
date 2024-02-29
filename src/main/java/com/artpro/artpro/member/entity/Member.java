@@ -20,6 +20,7 @@ public class Member {
     private String email;
     private String nickname;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder
@@ -32,6 +33,8 @@ public class Member {
     }
 
     public Member(Claims claims) {
-        this.email = claims.get("email").toString();
+        this.id = Long.parseLong(claims.get("id").toString());
+        this.email = claims.getSubject();
+        this.role = Role.getRole(claims.get("auth").toString());
     }
 }

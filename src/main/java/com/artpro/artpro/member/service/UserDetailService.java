@@ -15,29 +15,23 @@ import java.util.Collections;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailService {
+public class UserDetailService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
-    public UserDetailsService userDetailsService() {
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return memberRepository
+                .findByEmail(email)
+                .map(this::createUserDetails)
+                .orElseThrow(() -> new UsernameNotFoundException(""));
+    }
 
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                return memberRepository
-                        .findByEmail(username)
-                        .map(this::createUserDetails)
-                        .orElseThrow(() -> new UsernameNotFoundException(""));
-            }
-
-            private UserDetails createUserDetails(Member member) {
-                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getRole().toString());
-
-                return new User(
-                        member.getEmail(),
-                        member.getPassword(),
-                        Collections.singleton(grantedAuthority)
-                );
-            }
-        };
+    private UserDetails createUserDetails(Member member) {
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getRole().toString());
+        return new User(
+                member.getEmail(),
+                member.getPassword(),
+                Collections.singleton(grantedAuthority)
+        );
     }
 }
