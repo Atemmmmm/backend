@@ -35,6 +35,6 @@ public class Member {
     public Member(Claims claims) {
         this.id = Long.parseLong(claims.get("id").toString());
         this.email = claims.getSubject();
-        this.role = Role.getRole(claims.get("auth").toString());
+        this.role = Role.getRoleByName(claims.get("auth").toString());
     }
 }
