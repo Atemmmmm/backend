@@ -1,20 +1,21 @@
 package com.artpro.artpro.member.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.Objects;
 
+@AllArgsConstructor
+@Getter
 public enum Role {
-    ARTIST("ARTIST"),
-    PRODUCER("PRODUCER"),
-    ADMIN("ADMIN");
+    ROLE_ARTIST("ROLE_ARTIST"),
+    ROLE_PRODUCER("ROLE_PRODUCER"),
+    ROLE_ADMIN("ROLE_ADMIN");
 
     private final String name;
 
-    Role(String name) {
-        this.name = name;
-    }
-
-    public static Role getRole(String name) {
+    public static Role getRoleByName(String name) {
         return Arrays.stream(Role.values())
                 .filter(r -> Objects.equals(r.name, name))
                 .findAny()
