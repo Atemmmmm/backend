@@ -7,4 +7,5 @@ public class MessageRequest {
 
     private String message;
     private String createAt;
+    private String senderNickname;
 }
