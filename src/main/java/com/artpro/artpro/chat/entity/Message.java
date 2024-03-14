@@ -25,11 +25,11 @@ public class Message {
     private ChattingRoom chattingRoom;
 
     @Builder
-    public Message(Long id, String sender, String content, LocalDateTime createAt, ChattingRoom chattingRoom) {
+    public Message(Long id, String sender, String content, String createAt, ChattingRoom chattingRoom) {
         this.id = id;
         this.sender = sender;
         this.content = content;
-        this.createAt = createAt;
+        this.createAt = LocalDateTime.parse(createAt);
         this.chattingRoom = chattingRoom;
     }
 }

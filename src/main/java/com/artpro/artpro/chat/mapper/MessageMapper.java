@@ -13,6 +13,7 @@ public class MessageMapper {
         return Message.builder()
                 .content(request.getMessage())
                 .sender(request.getSenderNickname())
+                .createAt(request.getCreateAt())
                 .chattingRoom(chattingRoom)
                 .build();
     }

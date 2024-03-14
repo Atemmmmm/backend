@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Builder
 public class MessageResponse {
 
-    String message;
-    String sender;
-    LocalDateTime createAt;
+    private String message;
+    private String sender;
+    private LocalDateTime createAt;
 }
