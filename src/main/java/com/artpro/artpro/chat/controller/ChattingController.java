@@ -24,7 +24,6 @@ public class ChattingController {
     @SendTo("/sub/{roomId}")
     public CreateMessage createMessage(@DestinationVariable Long roomId, MessageRequest messageRequest) {
         chattingService.createMessage(messageRequest, roomId);
-        System.out.println(messageRequest.getMessage());
         return CreateMessage.builder()
                 .roomId(roomId)
                 .message(messageRequest.getMessage())

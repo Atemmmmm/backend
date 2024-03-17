@@ -24,12 +24,16 @@ public class Message {
     @ManyToOne
     private ChattingRoom chattingRoom;
 
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
     @Builder
-    public Message(Long id, String sender, String content, String createAt, ChattingRoom chattingRoom) {
+    public Message(Long id, String sender, String content, String createAt, ChattingRoom chattingRoom, Type type) {
         this.id = id;
         this.sender = sender;
         this.content = content;
         this.createAt = LocalDateTime.parse(createAt);
         this.chattingRoom = chattingRoom;
+        this.type = type;
     }
 }
