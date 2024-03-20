@@ -2,6 +2,7 @@ package com.artpro.artpro.chat.entity;
 
 import com.artpro.artpro.room.entity.ChattingRoom;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Message {
 
     @Id

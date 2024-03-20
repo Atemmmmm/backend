@@ -15,14 +15,26 @@ public class MessageMapper {
                 .sender(request.getSenderNickname())
                 .createAt(request.getCreateAt())
                 .chattingRoom(chattingRoom)
+                .type(request.getType())
+                .build();
+    }
+
+    public Message toEntity(String url, MessageRequest request, ChattingRoom chattingRoom) {
+        return Message.builder()
+                .content(url)
+                .sender(request.getSenderNickname())
+                .createAt(request.getCreateAt())
+                .chattingRoom(chattingRoom)
+                .type(request.getType())
                 .build();
     }
 
     public MessageResponse toDto(Message entity) {
         return MessageResponse.builder()
                 .message(entity.getContent())
-                .sender(entity.getSender())
+                .senderNickname(entity.getSender())
                 .createAt(entity.getCreateAt())
+                .type(entity.getType())
                 .build();
     }
 }
