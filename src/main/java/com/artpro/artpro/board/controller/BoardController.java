@@ -28,14 +28,14 @@ public class BoardController {
         boardService.create(request, member, song, coverImage);
     }
 
-    @GetMapping("/{category}")
+    @GetMapping()
     public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable,
-                                            @PathVariable String category,
+                                            @RequestParam String category,
                                             @RequestParam(defaultValue = "id", value = "orderby") String orderCriteria) {
         return boardService.getAllBoardByCategory(pageable, category, orderCriteria);
     }
 
-    @GetMapping("/{category}/{boardId}")
+    @GetMapping("/{boardId}")
     public BoardDetailResponse findByBoardId(@PathVariable long boardId) {
         return boardService.findByBoardId(boardId);
     }

@@ -1,61 +1,28 @@
 package com.artpro.artpro.config;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.ApiKey;
-import springfox.documentation.service.AuthorizationScope;
-import springfox.documentation.service.SecurityReference;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-
-import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
 
-
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
-                .useDefaultResponseMessages(true)
-                .apiInfo(apiInfo())
-                .securityContexts(List.of(this.securityContext()))
-                .securitySchemes(List.of(this.apiKey()))
-                .ignoredParameterTypes(AuthenticationPrincipal.class)
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.backend"))
-                .paths(PathSelectors.any())
-                .build();
-    }
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Artpro API")
+                        .description("아티스트와 프로듀서가 함께 협업할 수 있는 플랫폼")
+                        .version("1.0.0"))
+                .components(new Components()
+                        .addSecuritySchemes("bearer-key",
+                                new io.swagger.v3.oas.models.security.SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
 
-    public ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("ARTPRO Documentation")
-                .description("")
-                .version("0.1")
-                .build();
-    }
-
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
-    }
-
-    private List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return List.of(new SecurityReference("Authorization", authorizationScopes));
-    }
-
-    private ApiKey apiKey() {
-        return new ApiKey("Authorization", "Authorization", "header");
     }
 }
