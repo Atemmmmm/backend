@@ -4,5 +4,6 @@ public enum Type {
 
     MUSIC,
     TEXT,
-    FILE
+    AUDIO,
+    IMAGE
 }
