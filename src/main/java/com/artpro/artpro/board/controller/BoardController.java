@@ -1,5 +1,6 @@
 package com.artpro.artpro.board.controller;
 
+import com.artpro.artpro.board.dto.request.BoardParameter;
 import com.artpro.artpro.board.dto.request.CreateBoardRequest;
 import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
@@ -30,9 +31,8 @@ public class BoardController {
 
     @GetMapping()
     public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable,
-                                            @RequestParam String category,
-                                            @RequestParam(defaultValue = "id", value = "orderby") String orderCriteria) {
-        return boardService.getAllBoardByCategory(pageable, category, orderCriteria);
+                                            @ModelAttribute BoardParameter parameter) {
+        return boardService.getAllBoardByCategory(pageable, parameter);
     }
 
     @GetMapping("/{boardId}")

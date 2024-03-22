@@ -20,7 +20,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private String genre;
     private String cover;
     private String song;
     private String category;
@@ -38,12 +37,14 @@ public class Board {
     private LocalDateTime deleteAt;
     @Enumerated(EnumType.STRING)
     private BoardStatus status;
+    @Enumerated(EnumType.STRING)
+    private Genre genre;
 
     @Builder
     public Board(Long id, String title, String genre, String cover, String song, Member member, LocalDateTime createAt, LocalDateTime upDateAt, LocalDateTime deleteAt, BoardStatus status) {
         this.id = id;
         this.title = title;
-        this.genre = genre;
+        this.genre = Genre.getGenre(genre);
         this.cover = cover;
         this.song = song;
         this.category = member.getRole().toString().toLowerCase();
@@ -59,7 +60,7 @@ public class Board {
         this.title = title;
         this.cover = cover;
         this.song = song;
-        this.genre = genre;
+        this.genre = Genre.getGenre(genre);
     }
 
     public void updateLikeCount(int likeCount) {
