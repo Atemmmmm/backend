@@ -1,5 +1,6 @@
 package com.artpro.artpro.board.service;
 
+import com.artpro.artpro.board.dto.request.BoardParameter;
 import com.artpro.artpro.board.dto.request.CreateBoardRequest;
 import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
@@ -37,9 +38,11 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, String category, String orderCriteria) {
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(orderCriteria));
-        return boardRepository.findAllByCategory(pageable, category)
+    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, BoardParameter parameter) {
+        pageable = PageRequest.of(pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(parameter.getOrderCriteria()));
+        return boardRepository.findAllByCategoryAndGenre(pageable, parameter.getCategory(), parameter.getGenre())
                 .map(BoardResponse::new);
     }
 
