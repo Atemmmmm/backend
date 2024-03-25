@@ -6,10 +6,13 @@ import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.service.BoardService;
 import com.artpro.artpro.member.entity.Member;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,8 +24,9 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void create(@AuthenticationPrincipal Member member,
+                       @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
                        CreateBoardRequest request,
                        @RequestPart MultipartFile song,
                        @RequestPart MultipartFile coverImage) {
