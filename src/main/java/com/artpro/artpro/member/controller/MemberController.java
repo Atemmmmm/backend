@@ -4,7 +4,10 @@ import com.artpro.artpro.member.dto.LoginRequest;
 import com.artpro.artpro.member.dto.TokenResponse;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +25,10 @@ public class MemberController {
         return memberService.login(loginRequest);
     }
 
-    @PutMapping("/profile")
-    public void updateProfileImage(@AuthenticationPrincipal Member member, @RequestPart MultipartFile image) {
+    @PutMapping(value = "/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void updateProfileImage(@AuthenticationPrincipal Member member,
+                                   @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
+                                   @RequestPart MultipartFile image) {
         memberService.updateProfileImage(member.getEmail(), image);
     }
 }
