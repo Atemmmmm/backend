@@ -4,6 +4,7 @@ import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
 import com.artpro.artpro.member.dto.LoginRequest;
+import com.artpro.artpro.member.dto.ProfileResponse;
 import com.artpro.artpro.member.dto.TokenResponse;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.member.exception.MemberNotFoundException;
@@ -49,5 +50,11 @@ public class MemberService {
     public Page<BoardResponse> findBoardsByMemberId(Pageable pageable, Long memberId) {
         return boardRepository.findAllByMemberId(pageable, memberId)
                 .map(BoardResponse::new);
+    }
+
+    public ProfileResponse findMemberById(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(MemberNotFoundException::new);
+        return new ProfileResponse(member);
     }
 }

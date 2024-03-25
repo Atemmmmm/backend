@@ -2,6 +2,7 @@ package com.artpro.artpro.member.controller;
 
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.member.dto.LoginRequest;
+import com.artpro.artpro.member.dto.ProfileResponse;
 import com.artpro.artpro.member.dto.TokenResponse;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.member.service.MemberService;
@@ -36,8 +37,14 @@ public class MemberController {
         memberService.updateProfileImage(member.getEmail(), image);
     }
 
-    @GetMapping
-    public Page<BoardResponse> findBoardsByMemberId(@PageableDefault(size = 3) Pageable pageable, @AuthenticationPrincipal Member member) {
+    @GetMapping("/boards")
+    public Page<BoardResponse> findBoardsByMemberId(@PageableDefault(size = 3) Pageable pageable,
+                                                    @AuthenticationPrincipal Member member) {
         return memberService.findBoardsByMemberId(pageable, member.getId());
+    }
+
+    @GetMapping
+    public ProfileResponse findProfileByMemberId(@AuthenticationPrincipal Member member) {
+        return memberService.findMemberById(member.getId());
     }
 }
