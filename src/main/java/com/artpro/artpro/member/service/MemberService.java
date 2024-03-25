@@ -1,5 +1,7 @@
 package com.artpro.artpro.member.service;
 
+import com.artpro.artpro.board.dto.response.BoardResponse;
+import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
 import com.artpro.artpro.member.dto.LoginRequest;
 import com.artpro.artpro.member.dto.TokenResponse;
@@ -8,6 +10,8 @@ import com.artpro.artpro.member.exception.MemberNotFoundException;
 import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -21,6 +25,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final FileRepository fileRepository;
+    private final BoardRepository boardRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -39,5 +44,10 @@ public class MemberService {
                 .orElseThrow(MemberNotFoundException::new);
         String url = fileRepository.save(image);
         member.updateProfileImage(url);
+    }
+
+    public Page<BoardResponse> findBoardsByMemberId(Pageable pageable, Long memberId) {
+        return boardRepository.findAllByMemberId(pageable, memberId)
+                .map(BoardResponse::new);
     }
 }
