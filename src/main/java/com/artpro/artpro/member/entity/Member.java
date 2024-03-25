@@ -20,6 +20,7 @@ public class Member {
     private String email;
     private String nickname;
     private String password;
+    private String profileImage;
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -36,5 +37,9 @@ public class Member {
         this.id = Long.parseLong(claims.get("id").toString());
         this.email = claims.getSubject();
         this.role = Role.getRoleByName(claims.get("auth").toString());
+    }
+
+    public void updateProfileImage(String url) {
+        this.profileImage = url;
     }
 }
