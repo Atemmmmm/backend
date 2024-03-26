@@ -37,7 +37,7 @@ public class SecurityConfig {
                                 .requestMatchers("/v3/api-docs/**").permitAll()
                                 .requestMatchers("/swagger-resources/**").permitAll()
                                 .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/members").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/members").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/boards/**").permitAll()
                                 .requestMatchers("/api/v1/admin").hasAnyAuthority("ADMIN")
                                 .anyRequest()
