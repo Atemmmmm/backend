@@ -1,11 +1,15 @@
 package com.artpro.artpro.member.entity;
 
+import com.artpro.artpro.heart.entity.Heart;
 import io.jsonwebtoken.Claims;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -23,6 +27,8 @@ public class Member {
     private String profileImage;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany
+    private Set<Heart> hearts;
 
     @Builder
     public Member(Long id, String email, String password, String nickname, Role role) {
@@ -31,6 +37,7 @@ public class Member {
         this.nickname = nickname;
         this.password = password;
         this.role = role;
+        this.hearts = new HashSet<>();
     }
 
     public Member(Claims claims) {

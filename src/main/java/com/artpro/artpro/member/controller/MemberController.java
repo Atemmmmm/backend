@@ -43,6 +43,12 @@ public class MemberController {
         return memberService.findBoardsByMemberId(pageable, member.getId());
     }
 
+    @GetMapping("/hearts")
+    public Page<BoardResponse> findBoardsByHeart(@PageableDefault(size = 3) Pageable pageable,
+                                                 @AuthenticationPrincipal Member member) {
+        return memberService.findBoardsByHeart(pageable, member.getId());
+    }
+
     @GetMapping
     public ProfileResponse findProfileByMemberId(@AuthenticationPrincipal Member member) {
         return memberService.findMemberById(member.getId());

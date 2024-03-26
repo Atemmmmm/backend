@@ -3,6 +3,8 @@ package com.artpro.artpro.member.service;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
+import com.artpro.artpro.heart.entity.Heart;
+import com.artpro.artpro.heart.repository.HeartRepository;
 import com.artpro.artpro.member.dto.LoginRequest;
 import com.artpro.artpro.member.dto.ProfileResponse;
 import com.artpro.artpro.member.dto.TokenResponse;
@@ -27,6 +29,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final FileRepository fileRepository;
     private final BoardRepository boardRepository;
+    private final HeartRepository heartRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -56,5 +59,11 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
         return new ProfileResponse(member);
+    }
+
+    public Page<BoardResponse> findBoardsByHeart(Pageable page, Long memberId) {
+        return heartRepository.findHeartByMemberId(page, memberId)
+                .map(Heart::getBoard)
+                .map(BoardResponse::new);
     }
 }
