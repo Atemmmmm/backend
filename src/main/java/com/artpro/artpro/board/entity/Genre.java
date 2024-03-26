@@ -20,7 +20,6 @@ public enum Genre {
     private final String value;
 
     public static Genre getGenre(String value) {
-        System.out.println(value);
         // TODO : 존재하지 않는 장르일 경우 예외 처리 기능 추가
         return Arrays.stream(Genre.values())
                 .filter(genre -> value.equals(genre.value))

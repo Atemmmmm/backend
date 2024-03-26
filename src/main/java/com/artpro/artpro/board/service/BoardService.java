@@ -41,7 +41,7 @@ public class BoardService {
     public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, BoardParameter parameter) {
         pageable = PageRequest.of(pageable.getPageNumber(),
                 pageable.getPageSize(),
-                Sort.by(parameter.getOrderCriteria()));
+                Sort.by(Sort.Direction.DESC, parameter.getOrderCriteria()));
         return boardRepository.findAllByCategoryAndGenre(pageable, parameter.getCategory(), parameter.getGenre())
                 .map(BoardResponse::new);
     }
