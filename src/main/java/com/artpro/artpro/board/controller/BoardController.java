@@ -34,7 +34,7 @@ public class BoardController {
     }
 
     @GetMapping()
-    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 8) Pageable pageable,
+    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 6) Pageable pageable,
                                             @ModelAttribute BoardParameter parameter) {
         return boardService.getAllBoardByCategory(pageable, parameter);
     }
