@@ -26,8 +26,8 @@ public class BoardController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void create(@AuthenticationPrincipal Member member,
-                       @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
                        CreateBoardRequest request,
+                       @Parameter(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
                        @RequestPart MultipartFile song,
                        @RequestPart MultipartFile coverImage) {
         boardService.create(request, member, song, coverImage);
