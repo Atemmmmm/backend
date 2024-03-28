@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void create(@AuthenticationPrincipal Member member,
                        CreateBoardRequest request,
@@ -33,10 +35,13 @@ public class BoardController {
         boardService.create(request, member, song, coverImage);
     }
 
-    @GetMapping()
-    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 6) Pageable pageable,
+    @GetMapping
+    public Page<BoardResponse> findAllBoardsByCategory(@PageableDefault(size = 8) Pageable pageable,
                                             @ModelAttribute BoardParameter parameter) {
-        return boardService.getAllBoardByCategory(pageable, parameter);
+        System.out.println(parameter.getCategory());
+        System.out.println(parameter.getOrderBy());
+        System.out.println(parameter.getGenre());
+        return boardService.getAllBoards(pageable, parameter);
     }
 
     @GetMapping("/{boardId}")

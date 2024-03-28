@@ -22,7 +22,6 @@ public class Board {
     private String title;
     private String cover;
     private String song;
-    private String category;
 
     private int likeCount;
 
@@ -39,15 +38,17 @@ public class Board {
     private BoardStatus status;
     @Enumerated(EnumType.STRING)
     private Genre genre;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Builder
-    public Board(Long id, String title, String genre, String cover, String song, Member member, LocalDateTime createAt, LocalDateTime upDateAt, LocalDateTime deleteAt, BoardStatus status) {
+    public Board(Long id, String title, String genre, String cover, String song, Category category, Member member, LocalDateTime createAt, LocalDateTime upDateAt, LocalDateTime deleteAt, BoardStatus status) {
         this.id = id;
         this.title = title;
         this.genre = Genre.getGenre(genre);
         this.cover = cover;
         this.song = song;
-        this.category = member.getRole().toString().toLowerCase();
+        this.category = category;
         this.likeCount = 0;
         this.member = member;
         this.createAt = createAt;

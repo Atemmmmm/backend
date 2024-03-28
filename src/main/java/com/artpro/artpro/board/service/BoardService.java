@@ -5,6 +5,7 @@ import com.artpro.artpro.board.dto.request.CreateBoardRequest;
 import com.artpro.artpro.board.dto.response.BoardDetailResponse;
 import com.artpro.artpro.board.dto.response.BoardResponse;
 import com.artpro.artpro.board.entity.Board;
+import com.artpro.artpro.board.entity.Category;
 import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.mapper.BoardMapper;
 import com.artpro.artpro.board.repository.BoardRepository;
@@ -38,10 +39,25 @@ public class BoardService {
         boardRepository.save(board);
     }
 
-    public Page<BoardResponse> getAllBoardByCategory(Pageable pageable, BoardParameter parameter) {
+    public Page<BoardResponse> getAllBoards(Pageable pageable, BoardParameter parameter) {
+        if (parameter.getCategory() == Category.ALL) {
+            return findAll(pageable, parameter);
+        }
+        return getAllBoardByCategory(pageable, parameter);
+    }
+
+    private Page<BoardResponse> findAll(Pageable pageable, BoardParameter parameter) {
         pageable = PageRequest.of(pageable.getPageNumber(),
                 pageable.getPageSize(),
-                Sort.by(Sort.Direction.DESC, parameter.getOrderCriteria()));
+                Sort.by(Sort.Direction.DESC, parameter.getOrderBy()));
+        return boardRepository.findAll(pageable)
+                .map(BoardResponse::new);
+    }
+
+    private Page<BoardResponse> getAllBoardByCategory(Pageable pageable, BoardParameter parameter) {
+        pageable = PageRequest.of(pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, parameter.getOrderBy()));
         return boardRepository.findAllByCategoryAndGenre(pageable, parameter.getCategory(), parameter.getGenre())
                 .map(BoardResponse::new);
     }

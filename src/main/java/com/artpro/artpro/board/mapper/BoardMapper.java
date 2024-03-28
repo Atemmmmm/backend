@@ -2,6 +2,7 @@ package com.artpro.artpro.board.mapper;
 
 import com.artpro.artpro.board.dto.request.CreateBoardRequest;
 import com.artpro.artpro.board.entity.Board;
+import com.artpro.artpro.board.entity.Category;
 import com.artpro.artpro.member.entity.Member;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +16,7 @@ public class BoardMapper {
                 .title(dto.title())
                 .genre(dto.genre())
                 .member(member)
+                .category(Category.getCategoryByMemberRole(member))
                 .build();
     }
 }
