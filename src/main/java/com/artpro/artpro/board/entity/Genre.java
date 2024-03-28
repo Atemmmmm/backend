@@ -24,6 +24,6 @@ public enum Genre {
         return Arrays.stream(Genre.values())
                 .filter(genre -> value.equals(genre.value))
                 .findAny()
-                .orElseThrow();
+                .orElse(BALLAD);
     }
 }

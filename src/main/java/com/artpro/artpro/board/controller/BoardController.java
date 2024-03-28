@@ -33,10 +33,13 @@ public class BoardController {
         boardService.create(request, member, song, coverImage);
     }
 
-    @GetMapping()
-    public Page<BoardResponse> getAllBoards(@PageableDefault(size = 6) Pageable pageable,
+    @GetMapping
+    public Page<BoardResponse> findAllBoardsByCategory(@PageableDefault(size = 8) Pageable pageable,
                                             @ModelAttribute BoardParameter parameter) {
-        return boardService.getAllBoardByCategory(pageable, parameter);
+        System.out.println(parameter.getCategory());
+        System.out.println(parameter.getOrderBy());
+        System.out.println(parameter.getGenre());
+        return boardService.getAllBoards(pageable, parameter);
     }
 
     @GetMapping("/{boardId}")
