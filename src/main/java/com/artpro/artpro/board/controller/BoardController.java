@@ -38,9 +38,6 @@ public class BoardController {
     @GetMapping
     public Page<BoardResponse> findAllBoardsByCategory(@PageableDefault(size = 8) Pageable pageable,
                                             @ModelAttribute BoardParameter parameter) {
-        System.out.println(parameter.getCategory());
-        System.out.println(parameter.getOrderBy());
-        System.out.println(parameter.getGenre());
         return boardService.getAllBoards(pageable, parameter);
     }
 
