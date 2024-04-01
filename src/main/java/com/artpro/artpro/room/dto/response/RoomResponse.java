@@ -11,5 +11,6 @@ import lombok.RequiredArgsConstructor;
 public class RoomResponse {
 
     private final String counterpartNickname;
+    private final String counterpartEmail;
     private final MessageResponse lastMessage;
 }

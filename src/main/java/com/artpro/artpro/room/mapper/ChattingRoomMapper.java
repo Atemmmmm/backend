@@ -21,8 +21,10 @@ public class ChattingRoomMapper {
     }
 
     public RoomResponse mapToRoomDto(ChattingRoom chattingRoom, Member member, Message message) {
+        Member counterpart = findCounterpart(chattingRoom, member);
         return RoomResponse.builder()
-                .counterpartNickname(findCounterpart(chattingRoom, member))
+                .counterpartNickname(counterpart.getNickname())
+                .counterpartEmail(counterpart.getEmail())
                 .lastMessage(
                         MessageResponse.builder()
                                 .senderNickname(message.getSender())
@@ -33,10 +35,10 @@ public class ChattingRoomMapper {
                 .build();
     }
 
-    private String findCounterpart(ChattingRoom chattingRoom, Member member) {
+    private Member findCounterpart(ChattingRoom chattingRoom, Member member) {
         if (Objects.equals(chattingRoom.getCreateBy().getId(), member.getId())) {
-            return chattingRoom.getBoard().getMember().getNickname();
+            return chattingRoom.getBoard().getMember();
         }
-        return chattingRoom.getCreateBy().getNickname();
+        return chattingRoom.getCreateBy();
     }
 }
