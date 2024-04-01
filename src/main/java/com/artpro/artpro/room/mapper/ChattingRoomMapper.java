@@ -1,6 +1,8 @@
 package com.artpro.artpro.room.mapper;
 
 import com.artpro.artpro.board.entity.Board;
+import com.artpro.artpro.chat.dto.MessageResponse;
+import com.artpro.artpro.chat.entity.Message;
 import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.room.dto.response.RoomResponse;
 import com.artpro.artpro.room.entity.ChattingRoom;
@@ -18,10 +20,16 @@ public class ChattingRoomMapper {
                 .build();
     }
 
-    public RoomResponse mapToRoomDto(ChattingRoom chattingRoom, Member member) {
-        // TODO: 채팅 구현 후 마지막 메시지 추가
+    public RoomResponse mapToRoomDto(ChattingRoom chattingRoom, Member member, Message message) {
         return RoomResponse.builder()
                 .counterpartNickname(findCounterpart(chattingRoom, member))
+                .lastMessage(
+                        MessageResponse.builder()
+                                .senderNickname(message.getSender())
+                                .message(message.getContent())
+                                .type(message.getType())
+                                .createAt(message.getCreateAt())
+                                .build())
                 .build();
     }
 

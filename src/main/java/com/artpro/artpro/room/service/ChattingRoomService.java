@@ -53,7 +53,10 @@ public class ChattingRoomService {
     public List<RoomResponse> findByMemberId(Member member) {
         List<ChattingRoom> rooms = chattingRoomRepository.findAllByCreateByOrBoard_Member(member, member);
         return rooms.stream()
-                .map(room -> chattingRoomMapper.mapToRoomDto(room, member))
+                .map(room -> {
+                    Message message = chattingRepository.findFirstByChattingRoomOrderByCreateAtDesc(room);
+                    return chattingRoomMapper.mapToRoomDto(room, member, message);
+                })
                 .toList();
     }
 }

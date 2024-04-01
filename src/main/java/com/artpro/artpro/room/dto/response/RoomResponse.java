@@ -1,5 +1,6 @@
 package com.artpro.artpro.room.dto.response;
 
+import com.artpro.artpro.chat.dto.MessageResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,5 +11,5 @@ import lombok.RequiredArgsConstructor;
 public class RoomResponse {
 
     private final String counterpartNickname;
-    private final String lastMessage;
+    private final MessageResponse lastMessage;
 }
