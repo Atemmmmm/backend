@@ -4,6 +4,7 @@ import com.artpro.artpro.board.entity.Board;
 import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.heart.entity.Heart;
+import com.artpro.artpro.heart.exception.ExistingHeartException;
 import com.artpro.artpro.heart.exception.HeartNotFoundException;
 import com.artpro.artpro.heart.mapper.HeartMapper;
 import com.artpro.artpro.heart.repository.HeartRepository;
@@ -20,15 +21,22 @@ public class HeartService {
 
     private final HeartRepository heartRepository;
     private final BoardRepository boardRepository;
+    private final HeartMapper mapper;
 
     @Transactional
     public void create(Long boardId, Member member) {
+        validateExisting(boardId, member);
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(BoardNotFoundException::new);
-        HeartMapper mapper = new HeartMapper();
         Heart heart = mapper.mapToEntity(member, board);
         heartRepository.save(heart);
         board.updateLikeCount(board.getLikeCount() + 1);
+    }
+
+    private void validateExisting(Long boardId, Member member) {
+        if (isHeart(boardId, member)) {
+            throw new ExistingHeartException();
+        }
     }
 
     @Transactional

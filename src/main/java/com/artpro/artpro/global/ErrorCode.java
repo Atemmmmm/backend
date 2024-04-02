@@ -13,7 +13,8 @@ public enum ErrorCode {
     MISMATCH_PASSWORD(409, "ACCOUNT-004", "패스워드가 일치하지 않습니다."),
     MEMBER_DOES_NOT_EXIST(404, "ACCOUNT-005", "존재하지 않는 계정입니다."),
     BOARD_DOES_NOT_EXIST(404, "BOARD-001", "존재하지 않는 게시물입니다."),
-    HEART_DOES_NOT_EXIST(404, "BOARD-002", "이미 존재하지 않는 좋아요입니다.");
+    HEART_DOES_NOT_EXIST(404, "HEART-001", "이미 존재하지 않는 좋아요입니다."),
+    EXITING_HEART(409, "HEART-002", "이미 좋아요를 눌렀습니다.");
 
     private final int status;
     private final String code;

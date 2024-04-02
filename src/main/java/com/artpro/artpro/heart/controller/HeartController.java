@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/boards/{boardId}/heart")
+@RequestMapping("api/v1/hearts")
 public class HeartController {
 
     private final HeartService heartService;
 
     @PostMapping
-    public void create(@PathVariable long boardId, @AuthenticationPrincipal Member member) {
+    public void create(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
         heartService.create(boardId, member);
     }
 
     @DeleteMapping("/{heartId}")
-    public void delete(@PathVariable long boardId, @PathVariable long heartId) {
+    public void delete(@PathVariable long heartId) {
         heartService.delete(heartId);
     }
 
 
     @GetMapping
-    public boolean isHeart(@PathVariable long boardId, @AuthenticationPrincipal Member member) {
+    public boolean isHeart(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
         return heartService.isHeart(boardId, member);
     }
 }
