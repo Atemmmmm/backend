@@ -77,11 +77,25 @@ public class BoardService {
     public void updateById(long boardId,
                            CreateBoardRequest request,
                            MultipartFile song,
-                           MultipartFile coverImage) {
+                           MultipartFile cover) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(BoardNotFoundException::new);
-        String songUrl = fileRepository.save(song);
-        String coverImageUrl = fileRepository.save(coverImage);
-        board.update(request.title(), request.genre(), songUrl, coverImageUrl);
+        String songUrl = updateSong(song, board);
+        String coverImageUrl = updateCoverImg(cover, board);
+        board.update(request.title(), request.genre(), coverImageUrl, songUrl);
+    }
+
+    private String updateSong(MultipartFile song, Board board) {
+        if (song != null) {
+            return fileRepository.save(song);
+        }
+        return board.getSong();
+    }
+
+    private String updateCoverImg(MultipartFile image, Board board) {
+        if (image != null) {
+            return fileRepository.save(image);
+        }
+        return board.getCover();
     }
 }

@@ -54,8 +54,8 @@ public class BoardController {
     @PutMapping("/{boardId}")
     public void updateById(@PathVariable long boardId,
                            CreateBoardRequest request,
-                           @RequestPart MultipartFile song,
-                           @RequestPart MultipartFile coverImage) {
+                           @RequestPart(required = false) MultipartFile song,
+                           @RequestPart(required = false) MultipartFile coverImage) {
         boardService.updateById(boardId, request, song, coverImage);
     }
 }
