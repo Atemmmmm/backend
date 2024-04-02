@@ -17,7 +17,7 @@ public class ChattingRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Member createBy;
 
     @ManyToOne
