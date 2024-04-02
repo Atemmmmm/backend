@@ -25,13 +25,14 @@ public class HeartService {
     private final HeartMapper mapper;
 
     @Transactional
-    public void create(Long boardId, Member member) {
+    public HeartResponse create(Long boardId, Member member) {
         validateExisting(boardId, member);
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(BoardNotFoundException::new);
         Heart heart = mapper.mapToEntity(member, board);
         heartRepository.save(heart);
         board.updateLikeCount(board.getLikeCount() + 1);
+        return mapper.mapToHeartResponse(getLikeCount(boardId), heart);
     }
 
     private void validateExisting(Long boardId, Member member) {

@@ -4,6 +4,7 @@ import com.artpro.artpro.heart.dto.HeartResponse;
 import com.artpro.artpro.heart.service.HeartService;
 import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,9 @@ public class HeartController {
     private final HeartService heartService;
 
     @PostMapping
-    public void create(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
-        heartService.create(boardId, member);
+    @ResponseStatus(HttpStatus.CREATED)
+    public HeartResponse create(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
+        return heartService.create(boardId, member);
     }
 
     @DeleteMapping("/{heartId}")
