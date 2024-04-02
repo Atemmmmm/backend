@@ -1,5 +1,6 @@
 package com.artpro.artpro.heart.controller;
 
+import com.artpro.artpro.heart.dto.HeartResponse;
 import com.artpro.artpro.heart.service.HeartService;
 import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ public class HeartController {
 
 
     @GetMapping
-    public boolean isHeart(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
-        return heartService.isHeart(boardId, member);
+    public HeartResponse isHeart(@RequestParam long boardId, @AuthenticationPrincipal Member member) {
+        return heartService.findHeartByBoardIdAndMemberId(boardId, member);
     }
 }

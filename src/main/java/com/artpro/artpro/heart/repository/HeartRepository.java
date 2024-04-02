@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface HeartRepository extends JpaRepository<Heart, Long> {
 
     Optional<List<Heart>> findHeartByBoardAndMember(Board board, Member member);
-    int countByBoard(Board board);
+    Optional<List<Heart>> findHeartByBoard_IdAndMember(Long boardId, Member member);
     Page<Heart> findHeartByMemberId(Pageable page, Long memberId);
 }

@@ -3,6 +3,7 @@ package com.artpro.artpro.heart.service;
 import com.artpro.artpro.board.entity.Board;
 import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.repository.BoardRepository;
+import com.artpro.artpro.heart.dto.HeartResponse;
 import com.artpro.artpro.heart.entity.Heart;
 import com.artpro.artpro.heart.exception.ExistingHeartException;
 import com.artpro.artpro.heart.exception.HeartNotFoundException;
@@ -39,6 +40,15 @@ public class HeartService {
         }
     }
 
+    private boolean isHeart(Long boardId, Member member) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        return heartRepository.findHeartByBoardAndMember(board, member)
+                .orElse(new ArrayList<>())
+                .stream()
+                .anyMatch(Heart::isValid);
+    }
+
     @Transactional
     public void delete(Long heartId) {
         Heart heart = heartRepository.findById(heartId)
@@ -48,12 +58,19 @@ public class HeartService {
         board.updateLikeCount(board.getLikeCount() - 1);
     }
 
-    public boolean isHeart(Long boardId, Member member) {
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(BoardNotFoundException::new);
-        return heartRepository.findHeartByBoardAndMember(board, member)
+    public HeartResponse findHeartByBoardIdAndMemberId(Long boardId, Member member) {
+        return heartRepository.findHeartByBoard_IdAndMember(boardId, member)
                 .orElse(new ArrayList<>())
                 .stream()
-                .anyMatch(Heart::isValid);
+                .filter(Heart::isValid)
+                .findAny()
+                .map(heart -> mapper.mapToHeartResponse(getLikeCount(boardId) , heart))
+                .orElse(mapper.mapToHeartResponse(getLikeCount(boardId)));
+    }
+
+    private int getLikeCount(Long boardId) {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(BoardNotFoundException::new);
+        return board.getLikeCount();
     }
 }
