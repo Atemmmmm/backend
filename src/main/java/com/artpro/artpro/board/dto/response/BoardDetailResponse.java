@@ -1,24 +1,12 @@
 package com.artpro.artpro.board.dto.response;
 
 import com.artpro.artpro.board.entity.Board;
+import com.artpro.artpro.board.entity.Genre;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Builder
-@Getter
-@RequiredArgsConstructor
-public class BoardDetailResponse {
-
-    private final String title;
-    private final String nickname;
-    private final String songUrl;
-    private final int likeCount;
-
+public record BoardDetailResponse(String title, String nickname, String songUrl, int likeCount, Genre genre){
     public BoardDetailResponse(Board board) {
-        this.title = board.getTitle();
-        this.nickname = board.getMember().getNickname();
-        this.songUrl = board.getSong();
-        this.likeCount = board.getLikeCount();
+        this(board.getTitle(), board.getMember().getNickname(), board.getSong(), board.getLikeCount(), board.getGenre());
     }
 }
