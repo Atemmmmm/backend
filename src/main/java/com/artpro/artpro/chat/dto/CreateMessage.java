@@ -10,7 +10,7 @@ public class CreateMessage {
 
     private Long roomId;
     private String message;
-    private String senderNickname;
+    private String senderEmail;
     private String createAt;
     private Type type;
 }

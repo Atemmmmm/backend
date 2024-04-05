@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class MessageResponse {
 
     private String message;
-    private String senderNickname;
+    private String senderEmail;
     private LocalDateTime createAt;
     private Type type;
 }
