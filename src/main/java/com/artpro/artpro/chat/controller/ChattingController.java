@@ -25,7 +25,7 @@ public class ChattingController {
         chattingService.createMessage(messageRequest, roomId);
         return CreateMessage.builder()
                 .roomId(roomId)
-                .senderNickname(messageRequest.getSenderNickname())
+                .senderEmail(messageRequest.getSenderEmail())
                 .message(messageRequest.getMessage())
                 .createAt(messageRequest.getCreateAt())
                 .type(messageRequest.getType())

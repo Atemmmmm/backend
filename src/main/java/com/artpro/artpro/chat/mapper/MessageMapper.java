@@ -12,7 +12,7 @@ public class MessageMapper {
     public Message toEntity(MessageRequest request, ChattingRoom chattingRoom) {
         return Message.builder()
                 .content(request.getMessage())
-                .sender(request.getSenderNickname())
+                .sender(request.getSenderEmail())
                 .createAt(request.getCreateAt())
                 .chattingRoom(chattingRoom)
                 .type(request.getType())
@@ -22,7 +22,7 @@ public class MessageMapper {
     public Message toEntity(String url, MessageRequest request, ChattingRoom chattingRoom) {
         return Message.builder()
                 .content(url)
-                .sender(request.getSenderNickname())
+                .sender(request.getSenderEmail())
                 .createAt(request.getCreateAt())
                 .chattingRoom(chattingRoom)
                 .type(request.getType())
@@ -32,7 +32,7 @@ public class MessageMapper {
     public MessageResponse toDto(Message entity) {
         return MessageResponse.builder()
                 .message(entity.getContent())
-                .senderNickname(entity.getSender())
+                .senderEmail(entity.getSender())
                 .createAt(entity.getCreateAt())
                 .type(entity.getType())
                 .build();

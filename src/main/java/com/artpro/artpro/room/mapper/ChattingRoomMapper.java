@@ -27,7 +27,7 @@ public class ChattingRoomMapper {
                 .counterpartEmail(counterpart.getEmail())
                 .lastMessage(
                         MessageResponse.builder()
-                                .senderNickname(message.getSender())
+                                .senderEmail(message.getSender())
                                 .message(message.getContent())
                                 .type(message.getType())
                                 .createAt(message.getCreateAt())
