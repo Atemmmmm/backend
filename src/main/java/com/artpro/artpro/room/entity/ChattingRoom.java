@@ -36,4 +36,8 @@ public class ChattingRoom {
         }
         return this.createBy;
     }
+
+    public boolean isParticipants(String senderEmail) {
+        return createBy.isSameMember(senderEmail) || board.getMember().isSameMember(senderEmail);
+    }
 }
