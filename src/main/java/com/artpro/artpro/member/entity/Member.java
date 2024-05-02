@@ -49,4 +49,8 @@ public class Member {
     public void updateProfileImage(String url) {
         this.profileImage = url;
     }
+
+    public boolean isSameMember(Member member) {
+        return member.email.equals(this.email);
+    }
 }

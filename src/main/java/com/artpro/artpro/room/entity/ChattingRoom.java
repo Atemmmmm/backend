@@ -29,4 +29,11 @@ public class ChattingRoom {
         this.createBy = createBy;
         this.board = board;
     }
+
+    public Member findCounterpart(Member member) {
+        if (member.isSameMember(this.createBy)) {
+            return this.board.getMember();
+        }
+        return this.createBy;
+    }
 }

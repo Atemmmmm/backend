@@ -55,7 +55,8 @@ public class ChattingRoomService {
         return rooms.stream()
                 .map(room -> {
                     Message message = chattingRepository.findFirstByChattingRoomOrderByCreateAtDesc(room);
-                    return chattingRoomMapper.mapToRoomDto(room, member, message);
+                    Member counterpart = room.findCounterpart(member);
+                    return chattingRoomMapper.mapToRoomDto(room, counterpart, message);
                 })
                 .toList();
     }
