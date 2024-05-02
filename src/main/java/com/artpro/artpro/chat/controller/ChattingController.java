@@ -32,12 +32,12 @@ public class ChattingController {
                 .build();
     }
 
-    @GetMapping("/room/{roomId}")
+    @GetMapping("/api/v1/room/{roomId}")
     public List<MessageResponse> findAllMessageByRoomId(@PathVariable Long roomId) {
         return chattingService.findAllByRoomId(roomId);
     }
 
-    @PostMapping("/room/{roomId}")
+    @PostMapping("/api/v1/room/{roomId}")
     public String saveImage(@PathVariable Long roomId, @RequestPart MultipartFile file) {
         return chattingService.saveFile(file);
     }
