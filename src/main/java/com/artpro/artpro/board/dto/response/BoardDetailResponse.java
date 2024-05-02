@@ -5,8 +5,8 @@ import com.artpro.artpro.board.entity.Genre;
 import lombok.Builder;
 
 @Builder
-public record BoardDetailResponse(String title, String nickname, String songUrl, int likeCount, Genre genre){
+public record BoardDetailResponse(Long id, String title, String nickname, String songUrl, int likeCount, Genre genre){
     public BoardDetailResponse(Board board) {
-        this(board.getTitle(), board.getMember().getNickname(), board.getSong(), board.getLikeCount(), board.getGenre());
+        this(board.getId(), board.getTitle(), board.getMember().getNickname(), board.getSong(), board.getLikeCount(), board.getGenre());
     }
 }
