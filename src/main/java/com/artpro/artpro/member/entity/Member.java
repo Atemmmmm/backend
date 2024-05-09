@@ -53,4 +53,8 @@ public class Member {
     public boolean isSameMember(Member member) {
         return member.email.equals(this.email);
     }
+
+    public boolean isSameMember(String email) {
+        return email.equals(this.email);
+    }
 }
