@@ -23,13 +23,7 @@ public class ChattingRoomMapper {
         return RoomResponse.builder()
                 .roomId(chattingRoom.getId())
                 .counterpart(new ProfileResponse(counterpart))
-                .lastMessage(
-                        MessageResponse.builder()
-                                .senderEmail(message.getSender())
-                                .message(message.getContent())
-                                .type(message.getType())
-                                .createAt(message.getCreateAt())
-                                .build())
+                .lastMessage(new MessageResponse(message))
                 .build();
     }
 }

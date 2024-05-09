@@ -1,10 +1,15 @@
 package com.artpro.artpro.chat.mapper;
 
+import com.artpro.artpro.chat.dto.ChattingListResponse;
 import com.artpro.artpro.chat.dto.MessageRequest;
 import com.artpro.artpro.chat.dto.MessageResponse;
 import com.artpro.artpro.chat.entity.Message;
+import com.artpro.artpro.member.dto.ProfileResponse;
+import com.artpro.artpro.member.entity.Member;
 import com.artpro.artpro.room.entity.ChattingRoom;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class MessageMapper {
@@ -29,12 +34,20 @@ public class MessageMapper {
                 .build();
     }
 
-    public MessageResponse toDto(Message entity) {
-        return MessageResponse.builder()
-                .message(entity.getContent())
-                .senderEmail(entity.getSender())
-                .createAt(entity.getCreateAt())
-                .type(entity.getType())
+    public ChattingListResponse toDto(List<Message> message, Member counterpart) {
+        return ChattingListResponse.builder()
+                .messages(toMessageResponse(message))
+                .counterpart(toProfileResponse(counterpart))
                 .build();
+    }
+
+    private List<MessageResponse> toMessageResponse(List<Message> messages) {
+        return messages.stream()
+                .map(MessageResponse::new)
+                .toList();
+    }
+
+    private ProfileResponse toProfileResponse(Member counterpart) {
+        return new ProfileResponse(counterpart);
     }
 }

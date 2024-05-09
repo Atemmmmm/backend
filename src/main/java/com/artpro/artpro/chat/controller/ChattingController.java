@@ -1,17 +1,17 @@
 package com.artpro.artpro.chat.controller;
 
+import com.artpro.artpro.chat.dto.ChattingListResponse;
 import com.artpro.artpro.chat.dto.CreateMessage;
 import com.artpro.artpro.chat.dto.MessageRequest;
-import com.artpro.artpro.chat.dto.MessageResponse;
 import com.artpro.artpro.chat.service.ChattingService;
+import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,8 +33,8 @@ public class ChattingController {
     }
 
     @GetMapping("/api/v1/room/{roomId}")
-    public List<MessageResponse> findAllMessageByRoomId(@PathVariable Long roomId) {
-        return chattingService.findAllByRoomId(roomId);
+    public ChattingListResponse findAllMessageByRoomId(@AuthenticationPrincipal Member member, @PathVariable Long roomId) {
+        return chattingService.findAllByRoomId(roomId, member);
     }
 
     @PostMapping("/api/v1/room/{roomId}")
