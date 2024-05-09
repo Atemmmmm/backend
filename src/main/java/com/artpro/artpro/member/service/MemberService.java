@@ -14,6 +14,7 @@ import com.artpro.artpro.member.jwt.JwtTokenProvider;
 import com.artpro.artpro.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -50,19 +51,23 @@ public class MemberService {
         member.updateProfileImage(url);
     }
 
-    public Page<BoardResponse> findBoardsByMemberId(Pageable pageable, Long memberId) {
-        return boardRepository.findAllByMemberId(pageable, memberId)
-                .map(BoardResponse::new);
-    }
-
     public ProfileResponse findMemberById(Long memberId) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFoundException::new);
         return new ProfileResponse(member);
     }
 
-    public Page<BoardResponse> findBoardsByHeart(Pageable page, Long memberId) {
-        return heartRepository.findHeartByMemberId(page, memberId)
+    public Page<BoardResponse> findBoardsByMemberId(Pageable pageable, Long memberId) {
+        pageable = PageRequest.of(pageable.getPageNumber(),
+                pageable.getPageSize());
+        return boardRepository.findAllByMemberId(pageable, memberId)
+                .map(BoardResponse::new);
+    }
+
+    public Page<BoardResponse> findBoardsByHeart(Pageable pageable, Long memberId) {
+        pageable = PageRequest.of(pageable.getPageNumber(),
+                pageable.getPageSize());
+        return heartRepository.findHeartByMemberId(pageable, memberId)
                 .map(Heart::getBoard)
                 .map(BoardResponse::new);
     }
