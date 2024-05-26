@@ -62,9 +62,15 @@ public class Board {
         this.cover = cover;
         this.song = song;
         this.genre = Genre.getGenre(genre);
+        this.status = BoardStatus.UPDATED;
     }
 
     public void updateLikeCount(int likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public void delete() {
+        this.status = BoardStatus.DELETED;
+        this.deleteAt = LocalDateTime.now();
     }
 }
