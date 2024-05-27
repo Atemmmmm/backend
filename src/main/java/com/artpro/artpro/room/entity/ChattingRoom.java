@@ -7,9 +7,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
+@DynamicInsert
+@SQLRestriction(value = "status = 'CREATED'")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChattingRoom {
 
@@ -23,11 +28,16 @@ public class ChattingRoom {
     @ManyToOne
     private Board board;
 
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'CREATED'")
+    private RoomStatus status;
+
     @Builder
-    public ChattingRoom(Long id, Member createBy, Board board) {
+    public ChattingRoom(Long id, Member createBy, Board board, RoomStatus status) {
         this.id = id;
         this.createBy = createBy;
         this.board = board;
+        this.status = status;
     }
 
     public Member findCounterpart(Member member) {
@@ -39,5 +49,9 @@ public class ChattingRoom {
 
     public boolean isParticipants(String senderEmail) {
         return createBy.isSameMember(senderEmail) || board.getMember().isSameMember(senderEmail);
+    }
+
+    public void delete() {
+        this.status = RoomStatus.DELETED;
     }
 }

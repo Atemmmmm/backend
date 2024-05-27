@@ -13,6 +13,8 @@ import com.artpro.artpro.file.repository.FileRepository;
 import com.artpro.artpro.heart.entity.Heart;
 import com.artpro.artpro.heart.repository.HeartRepository;
 import com.artpro.artpro.member.entity.Member;
+import com.artpro.artpro.room.entity.ChattingRoom;
+import com.artpro.artpro.room.repository.ChattingRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,7 @@ public class BoardService {
     private final FileRepository fileRepository;
     private final BoardRepository boardRepository;
     private final HeartRepository heartRepository;
+    private final ChattingRoomRepository chattingRoomRepository;
     private final BoardMapper boardMapper;
 
     @Transactional
@@ -75,6 +78,8 @@ public class BoardService {
     public void deleteById(long boardId) {
         heartRepository.findAllByBoard_Id(boardId)
                         .ifPresent(hearts -> hearts.forEach(Heart::delete));
+        chattingRoomRepository.findAllByBoard_Id(boardId)
+                        .ifPresent(rooms -> rooms.forEach(ChattingRoom::delete));
         boardRepository.findById(boardId)
                 .ifPresent(Board::delete);
 
