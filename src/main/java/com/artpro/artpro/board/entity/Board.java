@@ -6,6 +6,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -14,6 +17,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SQLRestriction(value = "status != 'DELETED'")
+@DynamicInsert
 public class Board {
 
     @Id
@@ -35,6 +40,7 @@ public class Board {
     private LocalDateTime upDateAt;
     private LocalDateTime deleteAt;
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'CREATED'")
     private BoardStatus status;
     @Enumerated(EnumType.STRING)
     private Genre genre;
