@@ -10,6 +10,8 @@ import com.artpro.artpro.board.exception.BoardNotFoundException;
 import com.artpro.artpro.board.mapper.BoardMapper;
 import com.artpro.artpro.board.repository.BoardRepository;
 import com.artpro.artpro.file.repository.FileRepository;
+import com.artpro.artpro.heart.entity.Heart;
+import com.artpro.artpro.heart.repository.HeartRepository;
 import com.artpro.artpro.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,7 @@ public class BoardService {
 
     private final FileRepository fileRepository;
     private final BoardRepository boardRepository;
+    private final HeartRepository heartRepository;
     private final BoardMapper boardMapper;
 
     @Transactional
@@ -70,7 +73,11 @@ public class BoardService {
 
     @Transactional
     public void deleteById(long boardId) {
-        boardRepository.deleteById(boardId);
+        heartRepository.findAllByBoard_Id(boardId)
+                        .ifPresent(hearts -> hearts.forEach(Heart::delete));
+        boardRepository.findById(boardId)
+                .ifPresent(Board::delete);
+
     }
 
     @Transactional

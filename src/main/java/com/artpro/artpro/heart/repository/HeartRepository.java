@@ -15,4 +15,6 @@ public interface HeartRepository extends JpaRepository<Heart, Long> {
     Optional<List<Heart>> findHeartByBoardAndMember(Board board, Member member);
     Optional<List<Heart>> findHeartByBoard_IdAndMember(Long boardId, Member member);
     Page<Heart> findHeartByMemberId(Pageable page, Long memberId);
+    Optional<List<Heart>> findAllByBoard_Id(Long boardId);
+
 }
